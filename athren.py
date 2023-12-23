@@ -6,7 +6,7 @@ from athren_purge import handle_purge_command
 from athren_quotes import handle_quote_command
 from athren_join import handle_memberjoin
 
-load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 intents = discord.Intents.default()
 intents.message_content = True
