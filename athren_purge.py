@@ -7,4 +7,6 @@ async def handle_purge_command(client, message):
     except (IndexError, ValueError):
       await message.channel.purge(limit=2)
   else:
-    await message.channel.send("You do not have the required role to use this command.")
+    await message.channel.send("You do not have permission to use this command!")
+
+    
