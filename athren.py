@@ -1,14 +1,19 @@
 #import libraries
 import os
-import time
 import discord
 from dotenv import load_dotenv
-from discord.utils import get
 
+#import rest of the code
+from athren_join import handle_memberjoin
+from athren_checks import handle_initchecks
 from athren_purge import handle_purge_command
 from athren_quotes import handle_quote_command
-from athren_wizard import handles_setup_command
-from athren_join import handle_memberjoin
+from athren_wizard import handle_setup_command
+
+from config import (
+    PREFIX,
+    ACTIVITY_TEXT,
+)
 
 #Load enviroment variables
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
@@ -20,63 +25,36 @@ intents.members = True
 
 #Global variables
 client = discord.Client(intents=intents)
-activity = ('Playing in the shadows.')
-defaultsleeptime = 2
+activity = discord.Game(name=ACTIVITY_TEXT)
 
 #Initialization
 @client.event
 async def on_ready():
     print(f"We have logged in as {client.user}")
-    await client.change_presence(activity=discord.CustomActivity(name=activity))
-    time.sleep(defaultsleeptime)
-    print("Initializing checks")
-
-    # Run the checks for each guild the bot is in
-    for guild in client.guilds:
-        all_checks_passed = await checks(guild)
-        if all_checks_passed:
-            print(f"Initialization complete, no errors found for {client.user}")
-        else:
-            print(f"Initialization checks failed for {guild.name}")
-
-    async def checks(guild):
-        # Flags for each check
-        role_exists = True
-        category_exists = True
-
-        # Check for role existence
-        existing_role = get(guild.roles, name="Athren.Mod")
-        if not existing_role:
-            print("Athren.Mod role doesn't exist")
-            role_exists = False  # Set flag to False if the role doesn't exist
-
-        # Check for category existence
-        existing_categories = get(guild.categories, name="athren-logs")
-        if not existing_categories:
-            print("Missing Athren-Logs category, probably missing channels too")
-            category_exists = False  # Set flag to False if the category doesn't exist
-
-        # Return True if all checks passed
-        return role_exists and category_exists
+    await client.change_presence(activity=activity)
+    await handle_initchecks(client)
 
 #Command handlers
 @client.event
-async def on_message(message):
-    if message.content.startswith('$setup'):
-        await handles_setup_command(client, message)
-
 async def on_member_join(member):
      await handle_memberjoin(member)
 
+@client.event
 async def on_message(message):
-    #Call for athren_purge.py
-    if message.content.startswith('$rm'):
+    # Check if the message is from the bot itself to prevent it from responding to its own messages
+    if message.author == client.user:
+        return
+    # Check if the message starts with the defined prefix and the command name
+    if message.content.startswith(f'{PREFIX}rm'):
         print('purge_command')
-        await handle_purge_command(client, message)
-    #Call for athren_quotes.py
-    if message.content.startswith('$inspire'):
+        await handle_purge_command(message)
+    elif message.content.startswith(f'{PREFIX}inspire'):
         print('quote_command')
-        await handle_quote_command(client, message)
-     
+        await handle_quote_command(message)
+    elif message.content.startswith(f'{PREFIX}setup'):
+        print('setup_command')
+        await handle_setup_command(message)
 
-client.run(os.environ['token'])
+    # Process other commands as needed
+
+client.run(os.environ['TOKEN'])
