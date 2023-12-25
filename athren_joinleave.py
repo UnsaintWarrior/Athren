@@ -11,12 +11,11 @@ async def handle_memberjoin(member):
     username = member.name  # The user's username
     user_id = member.id    # The user's unique ID
  
-      # Get the 'moderation' channel object
+    # Get the 'moderation' channel object
     modchannel = discord.utils.get(member.guild.channels, name='moderation')
     # Get the welcome channel object based on DEFAULT_WELCOME_CHANNEL from config
     welcomechannel = discord.utils.get(member.guild.channels, name=DEFAULT_WELCOME_CHANNEL)
     effectphrase = random.choice(EFFECT_PHRASE_LIST)
-
 
     #DEGUB
     print(f"Member joined: {username}, ID: {user_id}")
@@ -38,3 +37,20 @@ async def handle_memberjoin(member):
             await member.add_roles(role)
         else:
             print(f"Unable to add {role_name} role because it does not exist.")
+
+async def handle_memberleave(member):
+    username = member.name  # The user's username
+    user_id = member.id    # The user's unique ID
+ 
+      # Get the 'moderation' channel object
+    modchannel = discord.utils.get(member.guild.channels, name='moderation')
+
+    #DEGUB
+    print(f"Member left: {username}, ID: {user_id}")
+    ##
+
+    if modchannel:
+        await modchannel.send(f"Member left: {username}, ID: {user_id}")
+    else:
+        print("Moderation channel not found.")
+    

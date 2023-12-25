@@ -3,12 +3,8 @@ from config import DEFAULT_MOD_ROLE
 
 async def handle_purge_command(message):
     # Hardcode the role name for testing purposes
-    required_role_name = DEFAULT_MOD_ROLE #'Athren.Mod'
+    required_role_name = DEFAULT_MOD_ROLE
     required_role = discord.utils.get(message.guild.roles, name=required_role_name)
-
-    print(f"Hardcoded role: {required_role}")
-    print(f"User's roles: {message.author.roles}")
-
     # Check if the author has the required role
     if required_role and required_role in message.author.roles:
         try:

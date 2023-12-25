@@ -4,11 +4,12 @@ import discord
 from dotenv import load_dotenv
 
 #import rest of the code
-from athren_join import handle_memberjoin
+from athren_joinleave import handle_memberjoin, handle_memberleave
 from athren_checks import handle_initchecks
 from athren_purge import handle_purge_command
 from athren_quotes import handle_quote_command
 from athren_wizard import handle_setup_command
+
 
 from config import (
     PREFIX,
@@ -38,6 +39,10 @@ async def on_ready():
 @client.event
 async def on_member_join(member):
      await handle_memberjoin(member)
+
+@client.event
+async def on_member_remove(member):
+    await handle_memberleave(member)
 
 @client.event
 async def on_message(message):
