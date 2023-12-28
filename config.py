@@ -5,6 +5,7 @@ ACTIVITY_TEXT = 'in the shadows'
 
 #Defaults
 DEFAULT_WELCOME_CHANNEL = 'general'
+DEFAULT_MOD_CHANNEL = 'moderation'
 DEFAULT_JOIN_ROLE = ['Member',]
 DEFAULT_MOD_ROLE = 'Athren.Mod'
 

@@ -1,13 +1,14 @@
 import discord
-from config import DEFAULT_MOD_ROLE
+from config import DEFAULT_MOD_ROLE, DEFAULT_MOD_CHANNEL
 
 async def handle_purge_command(message):
-    # Hardcode the role name for testing purposes
+    #Grab the role and channel form the guild
     required_role_name = DEFAULT_MOD_ROLE
     required_role = discord.utils.get(message.guild.roles, name=required_role_name)
+    defaultModChannel = DEFAULT_MOD_CHANNEL
+    modchannel = discord.utils.get(message.guild.channels, name=defaultModChannel)
     # Check if the author has the required role
     if required_role in message.author.roles:
-        modchannel = discord.utils.get(message.guild.channels, name='moderation')
         try:
             number = int(message.content.split()[1])
             await message.channel.purge(limit=number + 1)

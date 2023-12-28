@@ -3,12 +3,8 @@ import os
 import discord
 from dotenv import load_dotenv
 
-#import rest of the code
-from athren_join_leave import handle_memberjoin, handle_memberleave
-from athren_checks import handle_initialchecks
-from athren_purge import handle_purge_command
-from athren_quotes import handle_quote_command
-from athren_wizard import handle_setup_command
+#import the package functions
+from functions import *
 
 from config import (
     PREFIX,

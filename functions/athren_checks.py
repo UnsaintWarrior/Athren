@@ -13,21 +13,6 @@ async def handle_initialchecks(client):
             print(f"Initialization checks failed for {guild.name}\n")
             # print(f'End of checks for {guild.name}\n')
 
-from discord.utils import get 
-from config import ROLES_TO_CHECK, CATEGORIES_TO_CREATE
-
-async def handle_initial_checks(client):
-    print("Initializing checks\n")
-    # Run the checks for each guild the bot is in
-    for guild in client.guilds:
-        print (f'Checking {guild.name}')
-        all_checks_passed = await checks(guild,ROLES_TO_CHECK)
-        if all_checks_passed:
-            print(f"Initialization complete, no errors found for {guild.name}\n")
-        else:
-            print(f"Initialization checks failed for {guild.name}\n")
-            # print(f'End of checks for {guild.name}\n')
-
 async def checks(guild, ROLES_TO_CHECK):
     # Flags for each check
     role_exists = True
