@@ -1,7 +1,7 @@
 from discord.utils import get 
 from config import ROLES_TO_CHECK, CATEGORIES_TO_CREATE
 
-async def handle_initchecks(client):
+async def handle_initialchecks(client):
     print("Initializing checks\n")
     # Run the checks for each guild the bot is in
     for guild in client.guilds:
@@ -16,7 +16,7 @@ async def handle_initchecks(client):
 from discord.utils import get 
 from config import ROLES_TO_CHECK, CATEGORIES_TO_CREATE
 
-async def handle_initchecks(client):
+async def handle_initial_checks(client):
     print("Initializing checks\n")
     # Run the checks for each guild the bot is in
     for guild in client.guilds:

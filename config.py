@@ -1,6 +1,6 @@
 
 #Base configurations
-PREFIX = '$'
+PREFIX = '!'
 ACTIVITY_TEXT = 'in the shadows'
 
 #Defaults
