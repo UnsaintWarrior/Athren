@@ -3,6 +3,7 @@ import random
 from config import (
     DEFAULT_JOIN_ROLE, 
     DEFAULT_WELCOME_CHANNEL,
+    DEFAULT_MOD_CHANNEL,
     EFFECT_PHRASE_LIST
 )
 
@@ -10,9 +11,10 @@ async def handle_memberjoin(member):
     
     username = member.name  # The user's username
     user_id = member.id    # The user's unique ID
+    mod_channel = DEFAULT_MOD_CHANNEL
  
     # Get the 'moderation' channel object
-    modchannel = discord.utils.get(member.guild.channels, name='moderation')
+    modchannel = discord.utils.get(member.guild.channels, name=mod_channel)
     # Get the welcome channel object based on DEFAULT_WELCOME_CHANNEL from config
     welcomechannel = discord.utils.get(member.guild.channels, name=DEFAULT_WELCOME_CHANNEL)
     effectphrase = random.choice(EFFECT_PHRASE_LIST)

@@ -17,6 +17,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
+intents.reactions = True
 
 #Global variables
 client = discord.Client(intents=intents)
@@ -55,5 +56,9 @@ async def on_message(message):
         await handle_setup_command(message)
 
     # Process other commands as needed
+@client.event
+async def on_raw_reaction_add(reaction, user, member):
+    print('Reaction Role')
+    await handle_reaction_role(reaction, user, member)
 
 client.run(os.environ['TOKEN'])
