@@ -31,16 +31,12 @@ async def on_ready():
     await handle_initialchecks(client)
 
 #Command handlers
-@client.event
-async def on_member_join(member):
-     await handle_memberjoin(member)
+# @client.event
+# async def on_member_join(member):
+#      await handle_memberjoin(member)
 
 @client.event
-async def on_member_remove(member):
-    await handle_memberleave(member)
-
-@client.event
-async def on_message(message):
+async def on_message(message, member):
     # Check if the message is from the bot itself to prevent it from responding to its own messages
     if message.author == client.user:
         return
@@ -54,11 +50,10 @@ async def on_message(message):
     elif message.content.startswith(f'{PREFIX}setup'):
         print('setup_command')
         await handle_setup_command(message)
+    elif message.content.startswith(f'{PREFIX}verify'):
+        member = message.author
+        await handle_memberjoin(member)
 
-    # Process other commands as needed
-@client.event
-async def on_raw_reaction_add(reaction, user, member):
-    print('Reaction Role')
-    await handle_reaction_role(reaction, user, member)
+#* TODO: add reaction role funcionality
 
 client.run(os.environ['TOKEN'])

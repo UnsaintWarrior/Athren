@@ -20,5 +20,3 @@ REQUESTS_API_LINK = 'https://zenquotes.io/api/random'
 EFFECT_PHRASE_LIST = [', welcome to the dark side!!',', come play in the shadows :wink: ',', welcome... my new toy  :smiling_imp:']
 
 ROLES_TO_CHECK = ['Athren.Mod', 'Member']
-
-# MODERATION_CHANNEL = ['moderation']
