@@ -43,9 +43,29 @@ async def setup_roles(guild, role_names):
 async def setup_category(guild):
     existing_category = get(guild.categories, name="athren-logs")
     if not existing_category:
-        category = await guild.create_category("athren-logs")
-        await guild.create_text_channel("internal", category=category)
-        await guild.create_text_channel("moderation", category=category)
+        # Fetch server owner and "Athren.Mod" role
+        server_owner = guild.owner
+        athren_mod_role = get(guild.roles, name="Athren.Mod")
+
+        if not athren_mod_role:
+            return "'Athren.Mod' role does not exist."
+
+        # Define permissions
+        overwrites = {
+            guild.default_role: discord.PermissionOverwrite(read_messages=False),
+            server_owner: discord.PermissionOverwrite(read_messages=True),
+            athren_mod_role: discord.PermissionOverwrite(read_messages=True)
+        }
+
+        # Create category with permissions
+        category = await guild.create_category("athren-logs", overwrites=overwrites)
+
+        # Create channels within the category
+        await guild.create_text_channel("internal", category=category, overwrites=overwrites)
+        await guild.create_text_channel("moderation", category=category, overwrites=overwrites)
+        
         return "athren-logs category and channels created!"
     else:
         return "athren-logs category already exists."
+
+# Assuming the command to handle setup would be somewhere in your bot code

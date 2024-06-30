@@ -2,6 +2,7 @@
 import os
 import discord
 from dotenv import load_dotenv
+from discord.utils import get 
 
 #import rest of the code
 from athren_joinleave import handle_memberjoin, handle_memberleave
@@ -17,7 +18,7 @@ from config import (
 )
 
 #Load enviroment variables
-load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
+load_dotenv()
 
 #Bot permissions
 intents = discord.Intents.default()
@@ -51,13 +52,16 @@ async def on_message(message):
         return
     # Check if the message starts with the defined prefix and the command name
     if message.content.startswith(f'{PREFIX}rm'):
-        print('purge_command')
+        for guild in client.guilds:
+            print(f'purge_command {guild.name}')
         await handle_purge_command(message)
     elif message.content.startswith(f'{PREFIX}inspire'):
-        print('quote_command')
+        for guild in client.guilds:
+            print(f'quote_command {guild.name}')
         await handle_quote_command(message)
     elif message.content.startswith(f'{PREFIX}setup'):
-        print('setup_command')
+        for guild in client.guilds:
+            print(f'setup_command {guild.name}')
         await handle_setup_command(message)
 
     # Process other commands as needed
